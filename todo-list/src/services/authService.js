@@ -1,10 +1,11 @@
 const authService = {
   login: async (email, password) => {
     if (email === 'user@example.com' && password === 'password') {
-      localStorage.setItem('token', 'dummy-token');
-      return true;
+      const token = 'dummy-token';
+      localStorage.setItem('token', token);
+      return token;
     }
-    return false;
+    return null;
   },
 };
 

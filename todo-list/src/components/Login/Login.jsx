@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import { TextField, Button, Container } from '@mui/material';
 
@@ -29,7 +28,7 @@ const Login = ({ onLogin }) => {
           fullWidth
           margin="normal"
         />
-        <Button type="submit" variant="contained" color="primary" fullWidth>
+        <Button data-testid="loginBtn" type="submit" variant="contained" color="primary" fullWidth>
           Login
         </Button>
       </form>
