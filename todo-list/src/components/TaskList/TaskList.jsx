@@ -1,8 +1,11 @@
-import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Paper, Box } from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
+import React, { useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Paper, Box, TextField } from '@mui/material';
+import { Delete, Edit, Check } from '@mui/icons-material';
 
 const TaskList = ({ tasks, onEdit, onDelete }) => {
+
+  const [taskEdit, setTaskEdit] = useState(null);
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -15,16 +18,30 @@ const TaskList = ({ tasks, onEdit, onDelete }) => {
         <TableBody>
           {tasks.map((task, index) => (
             <TableRow key={index}>
-              <TableCell>{task}</TableCell>
+              <TableCell>{taskEdit?.id === task?.id ?
+                <TextField
+                  value={taskEdit?.title}
+                  onChange={(e) => setTaskEdit(prev => ({ ...prev, title: e.target.value }))}
+                /> : task?.title}
+              </TableCell>
               <TableCell align="right">
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                   <Box>
-                    <IconButton data-testid="editBtn" onClick={() => onEdit(index)}>
-                      <Edit />
+                    <IconButton data-testid="editBtn">
+                      {taskEdit?.id === task?.id ?
+                        <Check onClick={() => {
+                          onEdit(taskEdit);
+                          setTaskEdit(null);
+                        }} />
+                        :
+                        <Edit onClick={() => setTaskEdit(task)} />}
                     </IconButton>
                   </Box>
                   <Box>
-                    <IconButton data-testid="deleteBtn" onClick={() => onDelete(index)}>
+                    <IconButton data-testid="deleteBtn" onClick={() => {
+                      setTaskEdit(null);
+                      onDelete(task?.id);
+                    }}>
                       <Delete />
                     </IconButton>
                   </Box>

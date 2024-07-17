@@ -1,20 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Container } from '@mui/material';
 
-const TaskForm = ({ onSubmit, editingTask }) => {
+const TaskForm = ({ onSubmit }) => {
   const [task, setTask] = useState('');
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (editingTask !== null) {
-      setTask(editingTask);
-    }
-  }, [editingTask]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (task.trim() === '') {
-      setError('A Task não pode estar vazia');
+      setError('A Tarefa não pode estar vazia');
       return;
     }
     onSubmit(task);
@@ -26,7 +20,7 @@ const TaskForm = ({ onSubmit, editingTask }) => {
     <Container maxWidth="sm">
       <form onSubmit={handleSubmit}>
         <TextField
-          label="Task"
+          label="Tarefa"
           fullWidth
           margin="normal"
           value={task}
@@ -35,7 +29,7 @@ const TaskForm = ({ onSubmit, editingTask }) => {
           helperText={error}
         />
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          {editingTask !== null ? 'Update Task' : 'Add Task'}
+          Adicionar Tarefa
         </Button>
       </form>
     </Container>
