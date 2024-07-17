@@ -4,7 +4,8 @@
     "password": "Password123.",
     "database": "testdb",
     "host": "localhost",
-    "dialect": "postgres",
-    "secretKey": "897356954c2cd3d41b221e3f24f99bba"
+    "dialect": "sqlite",
+    "secretKey": "897356954c2cd3d41b221e3f24f99bba",
+    "storage": "./db/database.sqlite"
   }
 }
