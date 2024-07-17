@@ -55,7 +55,8 @@ cd todo-list
 ## Testes
 Para executar os testes unitários, utilize o comando:
 ```
- npm test 
+ npm test
+ Precione a tecla 'A' no terminal para executar todos os testes.
 ```
 
 ## Instalação Back-end
