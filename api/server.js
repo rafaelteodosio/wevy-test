@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User, Task } = require('./models');
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/config/config.json')[env];
+const config = require('./config/config.json')[env];
 
 const app = express();
 app.use(bodyParser.json());
@@ -30,10 +30,11 @@ app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ where: { username } });
 
-  if (!user) return res.status(404).json({ error: 'User not found' });
+  if (!user) return res.status(403).json({ error: 'Credenciais inválidas' });
 
   const isValidPassword = await bcrypt.compare(password, user.password);
-  if (!isValidPassword) return res.status(403).json({ error: 'Invalid password' });
+
+  if (!isValidPassword) return res.status(403).json({ error: 'Credenciais inválidas' });
 
   const token = jwt.sign({ id: user.id, username: user.username }, config.secretKey);
   res.json({ token });
@@ -70,6 +71,8 @@ app.delete('/tasks/:id', authenticateToken, async (req, res) => {
   res.status(204).send();
 });
 
-app.listen(3001, () => {
-  console.log('Server is running on port 3001');
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(3001, () => console.log('Server is running on port 3001'));
+}
+
+module.exports = app;

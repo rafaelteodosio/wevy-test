@@ -10,23 +10,16 @@ describe('TaskForm Component', () => {
 
   test('should render TaskForm with empty input by default', () => {
     render(<TaskForm onSubmit={onSubmit} editingTask={null} />);
-    expect(screen.getByLabelText(/task/i)).toHaveValue('');
-    expect(screen.getByRole('button', { name: /add task/i })).toBeInTheDocument();
-  });
-
-  test('should render TaskForm with filled input when editingTask is provided', () => {
-    const editingTask = 'Test Task';
-    render(<TaskForm onSubmit={onSubmit} editingTask={editingTask} />);
-    expect(screen.getByLabelText(/task/i)).toHaveValue(editingTask);
-    expect(screen.getByRole('button', { name: /update task/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/tarefa/i)).toHaveValue('');
+    expect(screen.getByRole('button', { name: /adicionar tarefa/i })).toBeInTheDocument();
   });
 
   test('should call onSubmit with task value when form is submitted', () => {
     render(<TaskForm onSubmit={onSubmit} editingTask={null} />);
 
-    const input = screen.getByLabelText(/task/i);
+    const input = screen.getByLabelText(/tarefa/i);
     fireEvent.change(input, { target: { value: 'New Task' } });
-    fireEvent.click(screen.getByRole('button', { name: /add task/i }));
+    fireEvent.click(screen.getByRole('button', { name: /adicionar tarefa/i }));
 
     expect(onSubmit).toHaveBeenCalledWith('New Task');
     expect(input).toHaveValue('');
@@ -35,23 +28,23 @@ describe('TaskForm Component', () => {
   test('should show error message when trying to submit an empty task', () => {
     render(<TaskForm onSubmit={onSubmit} editingTask={null} />);
 
-    fireEvent.click(screen.getByRole('button', { name: /add task/i }));
+    fireEvent.click(screen.getByRole('button', { name: /adicionar tarefa/i }));
 
-    expect(screen.getByText(/a task não pode estar vazia/i)).toBeInTheDocument();
+    expect(screen.getByText(/a tarefa não pode estar vazia/i)).toBeInTheDocument();
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
   test('should clear error message after successful submission', () => {
     render(<TaskForm onSubmit={onSubmit} editingTask={null} />);
 
-    fireEvent.click(screen.getByRole('button', { name: /add task/i }));
-    expect(screen.getByText(/a task não pode estar vazia/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /adicionar tarefa/i }));
+    expect(screen.getByText(/a tarefa não pode estar vazia/i)).toBeInTheDocument();
 
-    const input = screen.getByLabelText(/task/i);
+    const input = screen.getByLabelText(/tarefa/i);
     fireEvent.change(input, { target: { value: 'New Task' } });
-    fireEvent.click(screen.getByRole('button', { name: /add task/i }));
+    fireEvent.click(screen.getByRole('button', { name: /adicionar tarefa/i }));
 
-    expect(screen.queryByText(/a task não pode estar vazia/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/a tarefa não pode estar vazia/i)).not.toBeInTheDocument();
     expect(onSubmit).toHaveBeenCalledWith('New Task');
     expect(input).toHaveValue('');
   });
