@@ -109,6 +109,10 @@ Para executar os testes unitários, utilize o comando:
 * React
 * Material UI
 * Jest
+* Node
+* Express
+* Sequelize
+* SQLite
 
 ## Autenticação
 Para fazer login, use as credenciais:
